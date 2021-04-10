@@ -25,3 +25,8 @@ const createOne = async (req, res) => {
     return res.status(500).send({ error: err });
   }
 };
+
+module.exports = {
+  ...crudController(User),
+  createOne,
+};
