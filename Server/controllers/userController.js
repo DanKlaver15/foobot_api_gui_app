@@ -1,6 +1,8 @@
 const User = require("../models/user");
 const query = require("../utils/query");
 const crudController = require("../utils/crud");
+const AvatarService = require("../services/avatarService");
+const avatars = new AvatarService();
 
 const createOne = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
@@ -26,7 +28,99 @@ const createOne = async (req, res) => {
   }
 };
 
+const removeOne = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const deletedUser = await query.removeOne(User, id);
+
+    if (deletedUser.deletedCount === 0)
+      return res.status(400).send({ error: "Unable to delete your account" });
+
+    return res.status(200).send(deletedUser);
+  } catch (err) {
+    return res.status(500).send({ error: `Error: ${err}` });
+  }
+};
+
+const addAvatar = async (req, res, next) => {
+  try {
+    const user = await query.getOne(User, req.params.id);
+
+    if (!user) return res.status(400).send({ error: "User does not exist" });
+
+    if (req.file && req.file.storedFilename) {
+      if (user.avatar) {
+        try {
+          await avatars.delete(user.avatar);
+        } catch (err) {
+          next(err);
+        }
+      }
+      user.avatar = req.file.storedFilename;
+    }
+
+    const savedUser = await user.save();
+
+    if (!savedUser)
+      return res.status(400).send({ error: "Unable to save avatar" });
+
+    return res.status(201).send(savedUser);
+  } catch (err) {
+    if (req.file && req.file.storedFilename) {
+      await avatars.delete(req.file.storedFilename);
+    }
+    return res.status(500).send({ error: `Error: ${err}` });
+  }
+};
+
+const removeAvatar = async (req, res, next) => {
+  try {
+    const user = await query.getOne(User, req.params.id);
+
+    if (!user) return res.status(400).send({ error: "User does not exist" });
+
+    if (user.avatar) {
+      await avatars.delete(user.avatar);
+      user.avatar = undefined;
+    }
+
+    const savedUser = await user.save();
+
+    if (!savedUser)
+      return res.status(400).send({ error: "Unable to save avatar" });
+
+    return res.status(201).send(savedUser);
+  } catch (err) {
+    return res.status(500).send({ error: `Error: ${err}` });
+  }
+};
+
+const getPerson = async (req, res) => {
+  const { personId } = req.params;
+
+  try {
+    const person = await User.findById(personId)
+      .select({
+        username: 1,
+        firstName: 1,
+        lastName: 1,
+        avatar: 1,
+        email: 1,
+      })
+      .lean()
+      .exec();
+
+    if (!person) return res.status(404).send({ error: "Person not found." });
+
+    return res.status(200).send({ ...person });
+  } catch (err) {}
+};
+
 module.exports = {
   ...crudController(User),
   createOne,
+  removeOne,
+  addAvatar,
+  removeAvatar,
+  getPerson,
 };
