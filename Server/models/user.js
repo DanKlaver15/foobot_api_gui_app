@@ -22,7 +22,6 @@ const userSchema = new mongoose.Schema({
   firstName: { type: String, required: true, minlength: 1, trim: true },
   lastName: { type: String, required: true, minlength: 1, trim: true },
   avatar: { type: String },
-  bgImage: { type: String },
   darkMode: { type: Boolean, default: false },
   registered: { type: Date, default: Date.now },
 });
