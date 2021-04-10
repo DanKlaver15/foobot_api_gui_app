@@ -1,8 +1,9 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
+import userReducers from "./User/reducers";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
-const reducers = {};
+const reducers = { ...userReducers };
 
 const rootReducer = combineReducers(reducers);
 
