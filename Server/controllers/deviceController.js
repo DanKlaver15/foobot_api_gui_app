@@ -1,5 +1,5 @@
-const Device = require("../Device");
-const crudController = require("../crud");
+const Device = require("../models/device");
+const crudController = require("../utils/crud");
 
 const createOne = async (req, res) => {
   try {
