@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { registerRequest } from "../../state/User/thunks";
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import Logo from "../../logo/Logo";
 
 const RegistrationForm = ({ register, registered }) => {
   const [firstName, setFirstName] = useState("");
@@ -20,12 +21,25 @@ const RegistrationForm = ({ register, registered }) => {
     );
 
   return (
-    <div className="flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="flex justify-center"></div>
+    <div className="min-h-screen bg-white flex">
+      <div className="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
+        <div className="mx-auto w-full max-w-sm lg:w-96">
+          <Logo />
+        </div>
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Register
         </h2>
+        <p className="mt-2 text-center text-sm text-gray-600 max-w">
+          Already have an account?
+          <Link
+            to={"/"}
+            className="font-medium text-indigo-600 hover:text-indigo-500"
+            style={{ marginLeft: ".3rem" }}
+          >
+            Login
+          </Link>
+        </p>
+
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
             <form
@@ -133,6 +147,13 @@ const RegistrationForm = ({ register, registered }) => {
             </form>
           </div>
         </div>
+      </div>
+      <div className="hidden lg:block relative w-0 flex-1">
+        <img
+          className="absolute inset-0 h-full w-full object-cover"
+          src="https://source.unsplash.com/SkJG9sNkQVQ/1080"
+          alt=""
+        />
       </div>
     </div>
   );
