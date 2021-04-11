@@ -21,8 +21,8 @@ const RegistrationForm = ({ register, registered }) => {
     );
 
   return (
-    <div className="min-h-screen bg-white flex">
-      <div className="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
+    <div className="bg-white flex">
+      <div className="flex-1 w-full flex flex-col justify-center py-12">
         <div className="mx-auto w-full max-w-sm lg:w-96">
           <Logo />
         </div>
@@ -41,7 +41,7 @@ const RegistrationForm = ({ register, registered }) => {
         </p>
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+          <div className="bg-white sm:rounded-lg">
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -147,13 +147,6 @@ const RegistrationForm = ({ register, registered }) => {
             </form>
           </div>
         </div>
-      </div>
-      <div className="hidden lg:block relative w-0 flex-1">
-        <img
-          className="absolute inset-0 h-full w-full object-cover"
-          src="https://source.unsplash.com/SkJG9sNkQVQ/1080"
-          alt=""
-        />
       </div>
     </div>
   );

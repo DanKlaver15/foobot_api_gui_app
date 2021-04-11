@@ -3,7 +3,7 @@ import RegistrationForm from "../forms/RegistrationForm";
 
 const Registration = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="bg-gray-50 min-h-1/2 justify-items-center">
       <RegistrationForm />
     </div>
   );
