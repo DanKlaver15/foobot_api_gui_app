@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
 import { loginRequest } from "../../state/User/thunks";
 import Logo from "../../logo/Logo";
 
 function LoginForm({ loginRequest, loginError }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const { pathname } = useLocation();
+  console.log(pathname);
 
   return (
     <div className="min-h-screen bg-white flex">
@@ -16,6 +20,16 @@ function LoginForm({ loginRequest, loginError }) {
             <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
               Sign in to your account
             </h2>
+            <p className="mt-2 text-sm text-gray-600 max-w">
+              Or
+              <Link
+                to={"/register"}
+                className="font-medium text-indigo-600 hover:text-indigo-500"
+                style={{ marginLeft: ".3rem" }}
+              >
+                Register here if you don't have an account
+              </Link>
+            </p>
           </div>
 
           <div className="mt-8">
