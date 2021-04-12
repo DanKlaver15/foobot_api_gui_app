@@ -152,12 +152,12 @@ const RegistrationForm = ({ register, registered }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  register: (user) => dispatch(registerRequest(user)),
-});
-
 const mapStateToProps = (state) => ({
   registered: state.registered,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  register: (user) => dispatch(registerRequest(user)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegistrationForm);
