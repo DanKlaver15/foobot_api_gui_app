@@ -105,3 +105,4 @@ dist
 /.idea/prettier.xml
 /.idea
 .DS_Store
+/Server/config/default.json
