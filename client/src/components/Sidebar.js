@@ -1,5 +1,6 @@
 ﻿import React from "react";
 import UserMenu from "./UserMenu";
+import LogoNameLight from "../logo/LogoNameLight";
 
 const Sidebar = ({ isOpen, close, user }) => {
   const menuOverlay = isOpen ? "opacity-100" : "opacity-0";
@@ -202,12 +203,8 @@ const Sidebar = ({ isOpen, close, user }) => {
       {/*<!-- Static sidebar for desktop -->*/}
       <div className="hidden lg:flex lg:flex-shrink-0">
         <div className="flex flex-col w-64 border-r border-gray-200 pt-5 pb-4 bg-gray-800">
-          <div className="flex items-center flex-shrink-0 px-6">
-            <img
-              className="h-8 w-auto"
-              src="https://tailwindui.com/img/logos/workflow-logo-purple-500-mark-gray-700-text.svg"
-              alt="Workflow"
-            />
+          <div className="flex items-center flex-shrink-0 px-1">
+            <LogoNameLight size={72} />
           </div>
           {/*<!-- Sidebar component, swap this element with another sidebar if you like -->*/}
           <div className="h-0 flex-1 flex flex-col overflow-y-auto">
