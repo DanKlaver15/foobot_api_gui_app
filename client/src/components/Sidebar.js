@@ -202,14 +202,14 @@ const Sidebar = ({ isOpen, close, user }) => {
 
       {/*<!-- Static sidebar for desktop -->*/}
       <div className="hidden lg:flex lg:flex-shrink-0">
-        <div className="flex flex-col w-64 border-r border-gray-200 pt-5 pb-4 bg-gray-800">
+        <div className="flex flex-col w-64 border-r border-gray-200 pt-1 bg-gray-800">
           <div className="flex items-center flex-shrink-0 px-1">
             <LogoNameLight size={72} />
           </div>
           {/*<!-- Sidebar component, swap this element with another sidebar if you like -->*/}
           <div className="h-0 flex-1 flex flex-col overflow-y-auto">
             {/*<!-- User account dropdown -->*/}
-            <div className="px-3 mt-6 relative inline-block text-left">
+            <div className="px-3 relative inline-block text-left">
               <UserMenu />
             </div>
             {/*<!-- Navigation -->*/}
