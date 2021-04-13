@@ -2,12 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import Avatar from "../Avatar";
 
-const Home = ({ user, getFeed, feed }) => {
-  useEffect(() => {
-    if (user._id) {
-      getFeed(user._id);
-    }
-  }, [getFeed, user]);
+const Home = ({ user }) => {
   return (
     <>
       <div className="flex space-x-3">
