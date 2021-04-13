@@ -214,113 +214,129 @@ const Sidebar = ({ isOpen, close, user }) => {
             </div>
             {/*<!-- Navigation -->*/}
             <nav className="px-3 mt-6">
-              <div className="space-y-1">
-                {/*<!-- Current: "bg-gray-200 text-gray-900", Default: "text-gray-700 hover:text-gray-900 hover:bg-gray-50" -->*/}
-                <button
-                  className="bg-gray-200 text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-                  aria-current="page"
-                >
-                  {/*<!--
+              <button className="bg-gray-900 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                {/*<!--
                 Heroicon name: outline/home
 
-                Current: "text-gray-500", Default: "text-gray-400 group-hover:text-gray-500"
+                Current: "text-gray-300", Default: "text-gray-400 group-hover:text-gray-300"
               -->*/}
-                  <svg
-                    className="text-gray-500 mr-3 h-6 w-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                    />
-                  </svg>
-                  Home
-                </button>
-
-                <button className="text-gray-700 hover:text-gray-900 hover:bg-gray-50 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                  {/*<!-- Heroicon name: outline/view-list -->*/}
-                  <svg
-                    className="text-gray-400 group-hover:text-gray-500 mr-3 h-6 w-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M4 6h16M4 10h16M4 14h16M4 18h16"
-                    />
-                  </svg>
-                  My tasks
-                </button>
-
-                <button className="text-gray-700 hover:text-gray-900 hover:bg-gray-50 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                  {/*<!-- Heroicon name: outline/clock -->*/}
-                  <svg
-                    className="text-gray-400 group-hover:text-gray-500 mr-3 h-6 w-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                  Recent
-                </button>
-              </div>
-              <div className="mt-8">
-                {/*<!-- Secondary navigation -->*/}
-                <h3
-                  className="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider"
-                  id="teams-headline"
+                <svg
+                  className="text-gray-300 mr-3 h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
                 >
-                  Teams
-                </h3>
-                <div
-                  className="mt-1 space-y-1"
-                  role="group"
-                  aria-labelledby="teams-headline"
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                  />
+                </svg>
+                Dashboard
+              </button>
+
+              <button className="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                {/*<!-- Heroicon name: outline/users -->*/}
+                <svg
+                  className="text-gray-400 group-hover:text-gray-300 mr-3 h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
                 >
-                  <button className="group flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:text-gray-900 hover:bg-gray-50">
-                    <span
-                      className="w-2.5 h-2.5 mr-4 bg-indigo-500 rounded-full"
-                      aria-hidden="true"
-                    ></span>
-                    <span className="truncate">Engineering</span>
-                  </button>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                  />
+                </svg>
+                Team
+              </button>
 
-                  <button className="group flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:text-gray-900 hover:bg-gray-50">
-                    <span
-                      className="w-2.5 h-2.5 mr-4 bg-green-500 rounded-full"
-                      aria-hidden="true"
-                    ></span>
-                    <span className="truncate">Human Resources</span>
-                  </button>
+              <button className="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                {/*<!-- Heroicon name: outline/folder -->*/}
+                <svg
+                  className="text-gray-400 group-hover:text-gray-300 mr-3 h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"
+                  />
+                </svg>
+                Projects
+              </button>
 
-                  <button className="group flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-md hover:text-gray-900 hover:bg-gray-50">
-                    <span
-                      className="w-2.5 h-2.5 mr-4 bg-yellow-500 rounded-full"
-                      aria-hidden="true"
-                    ></span>
-                    <span className="truncate">Customer Success</span>
-                  </button>
-                </div>
-              </div>
+              <button className="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                {/*<!-- Heroicon name: outline/calendar -->*/}
+                <svg
+                  className="text-gray-400 group-hover:text-gray-300 mr-3 h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  />
+                </svg>
+                Calendar
+              </button>
+
+              <button className="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                {/*<!-- Heroicon name: outline/inbox -->*/}
+                <svg
+                  className="text-gray-400 group-hover:text-gray-300 mr-3 h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                  />
+                </svg>
+                Documents
+              </button>
+
+              <button className="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                {/*<!-- Heroicon name: outline/chart-bar -->*/}
+                <svg
+                  className="text-gray-400 group-hover:text-gray-300 mr-3 h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                  />
+                </svg>
+                Reports
+              </button>
             </nav>
           </div>
         </div>
