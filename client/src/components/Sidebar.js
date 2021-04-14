@@ -229,7 +229,7 @@ const Sidebar = ({ isOpen, close, user }) => {
             </div>
             <nav className="px-3 mt-6">
               <button
-                className={`${dashboardFormat} w-full group flex items-center px-2 py-2 text-sm font-medium rounded-md`}
+                className={`${dashboardFormat} focus:outline-none w-full group flex items-center px-2 py-2 text-sm font-medium rounded-md`}
               >
                 <div className="mr-3 text-xl">
                   <FontAwesomeIcon icon={faHouseUser} fixedWidth />
@@ -298,7 +298,7 @@ const Sidebar = ({ isOpen, close, user }) => {
               </button>
 
               <button
-                className={`${settingsFormat} w-full group flex items-center px-2 py-2 text-sm font-medium rounded-md`}
+                className={`${settingsFormat} focus:outline-none w-full group flex items-center px-2 py-2 text-sm font-medium rounded-md`}
               >
                 <div className="mr-3 text-xl">
                   <FontAwesomeIcon icon={faUserCog} fixedWidth />

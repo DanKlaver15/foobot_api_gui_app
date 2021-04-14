@@ -79,7 +79,7 @@ const SettingsForm = ({
                   name="username"
                   id="username"
                   autoComplete="username"
-                  className="flex-1 focus:ring-indigo-500 focus:border-indigo-500 block min-w-0 rounded-none rounded-md sm:text-sm border-gray-300 dark:bg-gray-500 dark:text-gray-300 pl-1"
+                  className="flex-1 focus:ring-indigo-500 focus:border-indigo-500 dark:focus:ring-gray-300 dark:focus:border-gray-300 block min-w-0 rounded-none rounded-md sm:text-sm border-gray-300 dark:bg-gray-500 dark:text-gray-300 pl-1"
                 />
               </div>
             </div>
@@ -98,7 +98,7 @@ const SettingsForm = ({
                   id="about"
                   name="about"
                   rows="3"
-                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full h-full sm:text-sm border-gray-300 rounded-md dark:bg-gray-500 dark:text-gray-300 pl-1"
+                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:focus:ring-gray-300 dark:focus:border-gray-300 block w-full h-full sm:text-sm border-gray-300 rounded-md dark:bg-gray-500 dark:text-gray-300 pl-1"
                 />
               </div>
               <p className="mt-2 text-sm text-gray-500">
@@ -157,7 +157,7 @@ const SettingsForm = ({
               <button
                 onClick={() => toggleDarkMode()}
                 type="button"
-                className={`bg-gray-300 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:border-gray-400 ${toggleClass}`}
+                className={`bg-gray-300 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full focus:outline-none cursor-pointer transition-colors ease-in-out duration-200 dark:border-gray-400 ${toggleClass}`}
                 aria-pressed="false"
                 aria-labelledby="availability-label"
               >
@@ -165,7 +165,7 @@ const SettingsForm = ({
 
                 <span
                   aria-hidden="true"
-                  className={`translate-x-0 pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200 ${toggleButtonClass}`}
+                  className={`translate-x-0 pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform transition ease-in-out duration-200 ${toggleButtonClass}`}
                 />
               </button>
             </div>
@@ -197,7 +197,7 @@ const SettingsForm = ({
                   name="first_name"
                   id="first_name"
                   autoComplete="given-name"
-                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md dark:bg-gray-500 dark:text-gray-300 pl-1"
+                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:focus:ring-gray-300 dark:focus:border-gray-300 block w-full sm:text-sm border-gray-300 rounded-md dark:bg-gray-500 dark:text-gray-300 pl-1"
                 />
               </div>
             </div>
@@ -217,7 +217,7 @@ const SettingsForm = ({
                   name="last_name"
                   id="last_name"
                   autoComplete="family-name"
-                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md dark:bg-gray-500 dark:text-gray-300 pl-1"
+                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:focus:ring-gray-300 dark:focus:border-gray-300 block w-full sm:text-sm border-gray-300 rounded-md dark:bg-gray-500 dark:text-gray-300 pl-1"
                 />
               </div>
             </div>
@@ -237,7 +237,7 @@ const SettingsForm = ({
                   name="email"
                   type="email"
                   autoComplete="email"
-                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md dark:bg-gray-500 dark:text-gray-300 pl-1"
+                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:focus:ring-gray-300 dark:focus:border-gray-300 block w-full sm:text-sm border-gray-300 rounded-md dark:bg-gray-500 dark:text-gray-300 pl-1"
                 />
               </div>
             </div>
