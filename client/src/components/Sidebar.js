@@ -1,8 +1,10 @@
 ﻿import React from "react";
+import { Link } from "react-router-dom";
 import UserMenu from "./UserMenu";
 import LogoNameLight from "../logo/LogoNameLight";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouseUser } from "@fortawesome/pro-duotone-svg-icons";
+import { faHouseUser } from "@fortawesome/pro-light-svg-icons";
+import { faUserCog } from "@fortawesome/pro-light-svg-icons";
 
 const Sidebar = ({ isOpen, close, user }) => {
   const menuOverlay = isOpen ? "opacity-100" : "opacity-0";
@@ -216,12 +218,15 @@ const Sidebar = ({ isOpen, close, user }) => {
             </div>
             {/*<!-- Navigation -->*/}
             <nav className="px-3 mt-6">
-              <button className="bg-gray-900 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                <div className="mr-3">
-                  <FontAwesomeIcon icon={faHouseUser} size="2x" />
+              <Link
+                to="/"
+                className="bg-gray-900 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+              >
+                <div className="mr-3 text-xl">
+                  <FontAwesomeIcon icon={faHouseUser} fixedWidth />
                 </div>
                 Dashboard
-              </button>
+              </Link>
 
               <button className="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                 {/*<!-- Heroicon name: outline/users -->*/}
@@ -304,23 +309,10 @@ const Sidebar = ({ isOpen, close, user }) => {
               </button>
 
               <button className="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                {/*<!-- Heroicon name: outline/chart-bar -->*/}
-                <svg
-                  className="text-gray-400 group-hover:text-gray-300 mr-3 h-6 w-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                  />
-                </svg>
-                Reports
+                <div className="mr-3 text-xl">
+                  <FontAwesomeIcon icon={faUserCog} fixedWidth />
+                </div>
+                <Link to="/settings">Settings</Link>
               </button>
             </nav>
           </div>
