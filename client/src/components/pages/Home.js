@@ -9,7 +9,7 @@ const Home = ({ user }) => {
         <div className="flex-shrink-0">
           <Avatar size={10} source={user.avatar} />
         </div>
-        <div className="min-w-0 flex-1"></div>
+        <div className="min-w-0 flex-1" />
       </div>
     </>
   );
