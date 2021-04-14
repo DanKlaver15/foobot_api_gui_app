@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { authorizeRequest, getFromLocalStorage } from "./state/User/thunks";
 import { Switch, Route } from "react-router-dom";
 import Home from "./components/pages/Home";
+import SettingsForm from "./components/forms/SettingsForm";
 
 const AuthenticatedApp = React.lazy(() =>
   import("./components/AuthenticatedApp")
@@ -27,6 +28,7 @@ function App({ isLoggedIn, authorize }) {
         <AuthenticatedApp>
           <Switch>
             <Route path="/" exact component={Home} />
+            <Route path="/settings" component={SettingsForm} />
           </Switch>
         </AuthenticatedApp>
       ) : (
