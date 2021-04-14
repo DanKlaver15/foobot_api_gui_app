@@ -13,7 +13,9 @@ const AuthenticatedApp = ({ user, children }) => {
   };
 
   return (
-    <div className={`${darkOrLight()} h-screen flex overflow-hidden bg-white`}>
+    <div
+      className={`${darkOrLight()} h-screen flex overflow-hidden bg-gray-200`}
+    >
       <Sidebar
         user={user}
         isOpen={sidebarOpen}
