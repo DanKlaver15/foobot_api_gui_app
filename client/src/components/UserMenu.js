@@ -10,7 +10,7 @@ const UserMenu = ({ avatarSource, logout, userId, user }) => {
 
   const openClass = userMenu
     ? "transition ease-in duration-75 transform opacity-100 scale-100"
-    : "transition ease-out duration-100 transform opacity-0 scale-95";
+    : "transition ease-out duration-100 transform opacity-0 scale-0";
 
   useEffect(() => {
     if (userMenu) {
@@ -23,7 +23,7 @@ const UserMenu = ({ avatarSource, logout, userId, user }) => {
     };
   });
 
-  function onClickOutsideComponent(e) {
+  function onClickOutsideComponent() {
     if (userMenu) {
       setUserMenu(false);
     }
@@ -34,8 +34,9 @@ const UserMenu = ({ avatarSource, logout, userId, user }) => {
       <button
         type="button"
         onClick={() => setUserMenu(!userMenu)}
-        className="group w-full bg-gray-700 rounded-md px-3.5 py-2 text-sm text-left font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-purple-500"
+        className="group w-full bg-gray-700 rounded-md px-3.5 py-2 text-sm text-left font-medium text-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 focus:outline-none"
         id="options-menu"
+        aria-orientation="vertical"
         aria-expanded="false"
         aria-haspopup="true"
       >
