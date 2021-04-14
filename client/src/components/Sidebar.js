@@ -1,5 +1,5 @@
-﻿import React from "react";
-import { Link } from "react-router-dom";
+﻿import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import UserMenu from "./UserMenu";
 import LogoNameLight from "../logo/LogoNameLight";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,8 +9,21 @@ import { faUserCog } from "@fortawesome/pro-light-svg-icons";
 const Sidebar = ({ isOpen, close, user }) => {
   const menuOverlay = isOpen ? "opacity-100" : "opacity-0";
   const closeButton = isOpen ? "opacity-100" : "opacity-0";
-
   const offCanvasMenu = isOpen ? "translate-x-0" : "-translate-x-full";
+
+  const { pathname } = useLocation();
+  let dashboardFormat = "";
+  let settingsFormat = "";
+  if (pathname === "/") {
+    dashboardFormat = "bg-gray-900 text-white";
+  } else {
+    dashboardFormat = "text-gray-400 hover:bg-gray-700 hover:text-white";
+  }
+  if (pathname === "/settings") {
+    settingsFormat = "bg-gray-900 text-white";
+  } else {
+    settingsFormat = "text-gray-400 hover:bg-gray-700 hover:text-white";
+  }
 
   return (
     <div className="h-screen flex overflow-hidden bg-white">
@@ -33,7 +46,7 @@ const Sidebar = ({ isOpen, close, user }) => {
         <div
           className="fixed inset-0 bg-gray-600 bg-opacity-75"
           aria-hidden="true"
-        ></div>
+        />
 
         {/*<!--
       Off-canvas menu, show/hide based on off-canvas menu state.
@@ -172,7 +185,7 @@ const Sidebar = ({ isOpen, close, user }) => {
                     <span
                       className="w-2.5 h-2.5 mr-4 bg-indigo-500 rounded-full"
                       aria-hidden="true"
-                    ></span>
+                    />
                     <span className="truncate">Engineering</span>
                   </button>
 
@@ -180,7 +193,7 @@ const Sidebar = ({ isOpen, close, user }) => {
                     <span
                       className="w-2.5 h-2.5 mr-4 bg-green-500 rounded-full"
                       aria-hidden="true"
-                    ></span>
+                    />
                     <span className="truncate">Human Resources</span>
                   </button>
 
@@ -188,7 +201,7 @@ const Sidebar = ({ isOpen, close, user }) => {
                     <span
                       className="w-2.5 h-2.5 mr-4 bg-yellow-500 rounded-full"
                       aria-hidden="true"
-                    ></span>
+                    />
                     <span className="truncate">Customer Success</span>
                   </button>
                 </div>
@@ -210,25 +223,21 @@ const Sidebar = ({ isOpen, close, user }) => {
           <div className="flex items-center flex-shrink-0 px-1">
             <LogoNameLight size={72} />
           </div>
-          {/*<!-- Sidebar component, swap this element with another sidebar if you like -->*/}
           <div className="h-0 flex-1 flex flex-col overflow-y-auto">
-            {/*<!-- User account dropdown -->*/}
             <div className="px-3 relative inline-block text-left">
               <UserMenu />
             </div>
-            {/*<!-- Navigation -->*/}
             <nav className="px-3 mt-6">
-              <Link
-                to="/"
-                className="bg-gray-900 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+              <button
+                className={`${dashboardFormat} w-full group flex items-center px-2 py-2 text-sm font-medium rounded-md`}
               >
                 <div className="mr-3 text-xl">
                   <FontAwesomeIcon icon={faHouseUser} fixedWidth />
                 </div>
-                Dashboard
-              </Link>
+                <Link to="/">Dashboard</Link>
+              </button>
 
-              <button className="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+              <button className="text-gray-400 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                 {/*<!-- Heroicon name: outline/users -->*/}
                 <svg
                   className="text-gray-400 group-hover:text-gray-300 mr-3 h-6 w-6"
@@ -288,27 +297,9 @@ const Sidebar = ({ isOpen, close, user }) => {
                 Calendar
               </button>
 
-              <button className="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                {/*<!-- Heroicon name: outline/inbox -->*/}
-                <svg
-                  className="text-gray-400 group-hover:text-gray-300 mr-3 h-6 w-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                  />
-                </svg>
-                Documents
-              </button>
-
-              <button className="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+              <button
+                className={`${settingsFormat} w-full group flex items-center px-2 py-2 text-sm font-medium rounded-md`}
+              >
                 <div className="mr-3 text-xl">
                   <FontAwesomeIcon icon={faUserCog} fixedWidth />
                 </div>
