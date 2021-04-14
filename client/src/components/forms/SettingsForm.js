@@ -99,7 +99,7 @@ const SettingsForm = ({
                   name="about"
                   rows="3"
                   className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full h-full sm:text-sm border-gray-300 rounded-md dark:bg-gray-500 dark:text-gray-300 pl-1"
-                ></textarea>
+                />
               </div>
               <p className="mt-2 text-sm text-gray-500">
                 Write a few sentences about yourself.
@@ -166,7 +166,7 @@ const SettingsForm = ({
                 <span
                   aria-hidden="true"
                   className={`translate-x-0 pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200 ${toggleButtonClass}`}
-                ></span>
+                />
               </button>
             </div>
           </div>
@@ -261,6 +261,7 @@ const SettingsForm = ({
           </div>
         )}
       </div>
+
       <div className="pt-8 pb-12">
         <div>
           <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-400">
