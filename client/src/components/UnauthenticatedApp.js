@@ -21,7 +21,7 @@ const UnauthenticatedApp = () => {
           <div
             className="fixed inset-0 bg-gray-600 bg-opacity-75 transition-opacity"
             aria-hidden="true"
-          ></div>
+          />
 
           {/*<!-- This element is to trick the browser into centering the modal contents. -->*/}
           <span
