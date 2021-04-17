@@ -11,8 +11,8 @@ function LoginForm({ loginRequest, loginError }) {
   return (
     <div className="bg-white flex">
       <div className="flex-1 w-full flex flex-col justify-center py-12">
-        <div className="mx-auto w-full max-w-sm lg:w-96">
-          <Logo />
+        <div className="mx-auto w-full justify-center max-w-sm lg:w-96">
+          <Logo size={"auto"} />
         </div>
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Sign in to your account
