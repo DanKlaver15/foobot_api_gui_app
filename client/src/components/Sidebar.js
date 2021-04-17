@@ -5,6 +5,7 @@ import LogoNameLight from "../logo/LogoNameLight";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouseUser } from "@fortawesome/pro-light-svg-icons";
 import { faUserCog } from "@fortawesome/pro-light-svg-icons";
+import { faHdd } from "@fortawesome/pro-light-svg-icons";
 
 const Sidebar = ({ isOpen, close, user }) => {
   const menuOverlay = isOpen ? "opacity-100" : "opacity-0";
@@ -14,6 +15,7 @@ const Sidebar = ({ isOpen, close, user }) => {
   const { pathname } = useLocation();
   let dashboardFormat = "";
   let settingsFormat = "";
+  let foobotsFormat = "";
   if (pathname === "/") {
     dashboardFormat = "bg-gray-900 text-white";
   } else {
@@ -23,6 +25,11 @@ const Sidebar = ({ isOpen, close, user }) => {
     settingsFormat = "bg-gray-900 text-white";
   } else {
     settingsFormat = "text-gray-400 hover:bg-gray-700 hover:text-white";
+  }
+  if (pathname === "/foobots") {
+    foobotsFormat = "bg-gray-900 text-white";
+  } else {
+    foobotsFormat = "text-gray-400 hover:bg-gray-700 hover:text-white";
   }
 
   return (
@@ -220,8 +227,8 @@ const Sidebar = ({ isOpen, close, user }) => {
       {/*<!-- Static sidebar for desktop -->*/}
       <div className="hidden lg:flex lg:flex-shrink-0">
         <div className="flex flex-col w-64 border-r border-gray-200 pt-1 bg-gray-800">
-          <div className="flex items-center flex-shrink-0 px-1">
-            <LogoNameLight size={72} />
+          <div className="flex items-center justify-center flex-shrink-0 pt-4 px-1 pb-6">
+            <LogoNameLight size={32} />
           </div>
           <div className="h-0 flex-1 flex flex-col overflow-y-auto">
             <div className="px-3 relative inline-block text-left">
@@ -237,24 +244,13 @@ const Sidebar = ({ isOpen, close, user }) => {
                 <Link to="/">Dashboard</Link>
               </button>
 
-              <button className="text-gray-400 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                {/*<!-- Heroicon name: outline/users -->*/}
-                <svg
-                  className="text-gray-400 group-hover:text-gray-300 mr-3 h-6 w-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
-                  />
-                </svg>
-                Team
+              <button
+                className={`${foobotsFormat} focus:outline-none w-full group flex items-center px-2 py-2 text-sm font-medium rounded-md`}
+              >
+                <div className="mr-3 text-xl">
+                  <FontAwesomeIcon icon={faHdd} fixedWidth />
+                </div>
+                <Link to="/foobots">Foobots</Link>
               </button>
 
               <button className="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
@@ -278,7 +274,6 @@ const Sidebar = ({ isOpen, close, user }) => {
               </button>
 
               <button className="text-gray-300 hover:bg-gray-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                {/*<!-- Heroicon name: outline/calendar -->*/}
                 <svg
                   className="text-gray-400 group-hover:text-gray-300 mr-3 h-6 w-6"
                   xmlns="http://www.w3.org/2000/svg"
