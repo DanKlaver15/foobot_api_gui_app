@@ -27,7 +27,7 @@ const AuthenticatedApp = ({ user, children }) => {
         {/* <!-- Primary column --> */}
         <section
           aria-labelledby="primary-heading"
-          className="min-w-0 flex-1 h-full flex flex-col overflow-hidden lg:order-last p-8 pb-0 overflow-scroll scrollbar dark:scrollbar-track-gray-500"
+          className="min-w-0 flex-1 h-full flex flex-col overflow-hidden lg:order-last p-6 pb-0 overflow-scroll scrollbar dark:scrollbar-track-gray-500"
         >
           {children}
         </section>
