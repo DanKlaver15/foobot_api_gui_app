@@ -4,6 +4,7 @@ import { authorizeRequest, getFromLocalStorage } from "./state/User/thunks";
 import { Switch, Route } from "react-router-dom";
 import Home from "./components/pages/Home";
 import SettingsForm from "./components/forms/SettingsForm";
+import ManageFoobots from "./components/pages/ManageFoobots";
 
 const AuthenticatedApp = React.lazy(() =>
   import("./components/AuthenticatedApp")
@@ -29,6 +30,7 @@ function App({ isLoggedIn, authorize }) {
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/settings" component={SettingsForm} />
+            <Route path="/foobots" component={ManageFoobots} />
           </Switch>
         </AuthenticatedApp>
       ) : (
@@ -40,6 +42,7 @@ function App({ isLoggedIn, authorize }) {
 
 const mapStateToProps = (state) => ({
   isLoggedIn: state.loggedIn,
+
 });
 
 const mapDispatchToProps = (dispatch) => ({
