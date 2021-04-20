@@ -3,6 +3,7 @@ const cors = require("cors");
 const connectDB = require("./config/db");
 const users = require("./routes/users");
 const devices = require("./routes/devices");
+const folders = require("./routes/folders");
 const auth = require("./routes/auth");
 
 const app = express();
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use(cors());
 app.use("/api/users", users);
 app.use("/api/devices", devices);
+app.use("/api/folders", folders);
 app.use("/auth", auth);
 app.use(express.static("data"));
 
