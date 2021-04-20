@@ -1,31 +1,18 @@
 const mongoose = require("mongoose");
-const Int32 = require("mongoose-int32");
-const { deviceSchema } = require("./device");
 
-const childSchema = new mongoose.Schema({
-  id: {
-    type: Int32,
-    required: true,
+const folderSchema = new mongoose.Schema({
+  parent: {
+    type: mongoose.Schema.Types.ObjectId,
   },
   name: {
     type: String,
     required: true,
   },
-  devices: [deviceSchema],
+  userId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
+  devices: [{ type: mongoose.Schema.Types.ObjectId, ref: "Device" }],
+  children: [{ type: mongoose.Schema.Types.ObjectId }],
 });
 
-const parentSchema = new mongoose.Schema({
-  id: {
-    type: Int32,
-    required: true,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  children: [childSchema],
-});
+const Folder = mongoose.model("Folder", folderSchema);
 
-const Folder = mongoose.model("Folder", parentSchema);
-
-module.exports = { parentSchema, Folder };
+module.exports = { folderSchema, Folder };
