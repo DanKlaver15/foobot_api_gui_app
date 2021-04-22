@@ -261,7 +261,7 @@ const SettingsForm = ({
           </div>
         )}
       </div>
-
+      {/*TODO: Edit settings form appearance to remove the dividers between these bottom 2 sections and make delete account section more of an alert*/}
       <div className="pt-8 pb-12">
         <div>
           <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-400">
