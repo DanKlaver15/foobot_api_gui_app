@@ -2,12 +2,17 @@ import React, { useState } from "react";
 import ControlledTreeView from "../FolderTree";
 import DataDownload from "../DataDownload";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import {
+  addFolderRequest,
+  deleteFolderRequest,
+} from "../../state/Folder/thunks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFolderPlus } from "@fortawesome/pro-light-svg-icons";
 import { faFolderMinus } from "@fortawesome/pro-light-svg-icons";
 
-const ManageFoobots = ({}) => {
+const ManageFoobots = ({ userId, addFolder }) => {
+  // const [name, setName] = useState("default");
+
   return (
     /*TODO: Remove dashed border around areas before end of project*/
     <div className="flex-1 relative z-0 flex overflow-hidden">
@@ -33,6 +38,10 @@ const ManageFoobots = ({}) => {
         <div className="absolute inset-0 py-6 px-4 sm:px-6 lg:px-8">
           <div className="h-full border-2 border-gray-200 rounded-lg dark:text-gray-400">
             <button
+              onClick={(e) => {
+                e.preventDefault();
+                addFolder({ userId, name: "default" });
+              }}
               type="button"
               className="inline-flex align-bottom items-center px-5 mb-4 w-1/2 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded--tl-md text-white bg-indigo-600 dark:bg-gray-500 dark:border-4 dark:border-gray-300 dark:text-gray-800"
             >
@@ -63,4 +72,14 @@ const ManageFoobots = ({}) => {
   );
 };
 
-export default ManageFoobots;
+const mapStateToProps = (state) => ({
+  userId: state.user._id,
+  folder: state.folder,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addFolder: (folder) => dispatch(addFolderRequest(folder)),
+  deleteFolder: (folder) => dispatch(deleteFolderRequest(folder)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ManageFoobots);
