@@ -1,6 +1,7 @@
 const User = require("../models/user");
 const query = require("../utils/query");
 const crudController = require("../utils/crud");
+const { getFolders } = require("../utils/getFolders");
 const AvatarService = require("../services/avatarService");
 const avatars = new AvatarService();
 
@@ -112,7 +113,9 @@ const getPerson = async (req, res) => {
 
     if (!person) return res.status(404).send({ error: "Person not found." });
 
-    return res.status(200).send({ ...person });
+    let folderList = await getFolders([personId]);
+
+    return res.status(200).send({ ...person, folderList });
   } catch (err) {}
 };
 
