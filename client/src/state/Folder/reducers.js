@@ -3,7 +3,7 @@ import {
   FOLDERS_IN_FAILURE,
   FOLDERS_IN_SUCCESS,
   ADD_FOLDER,
-  UPDATE_FOLDERS,
+  UPDATE_FOLDER,
   DELETE_FOLDER,
 } from "./actions";
 
@@ -25,13 +25,13 @@ export const foldersLoading = (state = false, action) => {
   }
 };
 
-export const folders = (state = [], action) => {
+export const folder = (state = [], action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case UPDATE_FOLDERS: {
-      const { folders } = payload;
-      return folders;
+    case UPDATE_FOLDER: {
+      const { folder } = payload;
+      return folder;
     }
     case ADD_FOLDER: {
       const { folder } = payload;
@@ -46,7 +46,7 @@ export const folders = (state = [], action) => {
   }
 };
 const folderReducers = {
-  folders,
+  folder,
   foldersLoading,
 };
 

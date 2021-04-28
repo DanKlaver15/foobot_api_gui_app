@@ -13,10 +13,10 @@ export const foldersInSuccess = () => ({
   type: FOLDERS_IN_SUCCESS,
 });
 
-export const UPDATE_FOLDERS = "UPDATE_FOLDERS";
-export const updateFolders = (folders) => ({
-  type: UPDATE_FOLDERS,
-  payload: { folders },
+export const UPDATE_FOLDER = "UPDATE_FOLDER";
+export const updateFolder = (folder) => ({
+  type: UPDATE_FOLDER,
+  payload: { folder },
 });
 
 export const ADD_FOLDER = "ADD_FOLDER";
