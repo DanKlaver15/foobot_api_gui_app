@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
   },
   password: { type: String, required: true, minlength: 3, trim: true },
+  apiKey: { type: String, minlength: 301, trim: true },
   email: {
     type: String,
     required: true,
