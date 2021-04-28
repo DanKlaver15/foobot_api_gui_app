@@ -27,6 +27,7 @@ const SettingsForm = ({
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [email, setEmail] = useState(user.email);
+  const [apiKey, setApiKey] = useState(user.apiKey);
 
   const toggleDarkMode = () => {
     setMode(!darkMode);
@@ -237,6 +238,46 @@ const SettingsForm = ({
                   name="email"
                   type="email"
                   autoComplete="email"
+                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:focus:ring-gray-300 dark:focus:border-gray-300 block w-full sm:text-sm border-gray-300 rounded-md dark:bg-gray-500 dark:text-gray-300 pl-1"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="pt-8">
+          <div>
+            <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-400">
+              API Key
+            </h3>
+            <p className="mt-1 text-sm text-gray-500">
+              Please enter your Foobot API key here. If you do not yet have one,
+              please log in to{" "}
+              <a
+                className="font-bold"
+                href={"https://api.foobot.io/apidoc/index.html"}
+              >
+                Foobot.io
+              </a>{" "}
+              to obtain one.
+            </p>
+          </div>
+          <div className="grid grid-cols-5 gap-y-6 gap-x-7 xs:grid-cols-6">
+            <div className="col-span-2 h-full xs:col-span-2 row-start-2">
+              {/*TODO: has API key in databse for security*/}
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-400"
+              >
+                API Key
+              </label>
+              <div className="mt-1 w-2/3 flex h-8">
+                <input
+                  onChange={(e) => setApiKey(e.target.value)}
+                  value={apiKey}
+                  id="apiKey"
+                  name="apiKey"
+                  type="apiKey"
                   className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:focus:ring-gray-300 dark:focus:border-gray-300 block w-full sm:text-sm border-gray-300 rounded-md dark:bg-gray-500 dark:text-gray-300 pl-1"
                 />
               </div>
