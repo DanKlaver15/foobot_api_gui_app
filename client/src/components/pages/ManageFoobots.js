@@ -1,17 +1,35 @@
-import React, { useState } from "react";
-import ControlledTreeView from "../FolderTree";
+import React, { useEffect } from "react";
+import FolderTree from "../FolderTree";
 import DataDownload from "../DataDownload";
 import { connect } from "react-redux";
 import {
   addFolderRequest,
   deleteFolderRequest,
+  updateFolderRequest,
 } from "../../state/Folder/thunks";
+import { getFolderListRequest } from "../../state/FolderList/thunks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFolderPlus } from "@fortawesome/pro-light-svg-icons";
 import { faFolderMinus } from "@fortawesome/pro-light-svg-icons";
 
-const ManageFoobots = ({ userId, addFolder }) => {
-  // const [name, setName] = useState("default");
+const mongoose = require("mongoose");
+
+const ManageFoobots = ({
+  user,
+  folder,
+  addFolder,
+  deleteFolder,
+  updateFolder,
+  folderList,
+  getFolderList,
+}) => {
+  const userId = user._id;
+
+  useEffect(() => {
+    if (user._id) {
+      getFolderList(user._id);
+    }
+  }, [getFolderList, user]);
 
   return (
     /*TODO: Remove dashed border around areas before end of project*/
@@ -34,13 +52,15 @@ const ManageFoobots = ({ userId, addFolder }) => {
           </div>
         </div>
       </main>
-      <aside className="hidden relative xl:order-first xl:flex xl:flex-col flex-shrink-0 w-96 border-r border-gray-200">
+      <aside className="hidden relative xl:order-first xl:flex xl:flex-col flex-shrink-0 w-96 border-r border-gray-200 overscroll-y-auto">
         <div className="absolute inset-0 py-6 px-4 sm:px-6 lg:px-8">
           <div className="h-full border-2 border-gray-200 rounded-lg dark:text-gray-400">
             <button
               onClick={(e) => {
                 e.preventDefault();
-                addFolder({ userId, name: "default" });
+                let tempKey = mongoose.Types.ObjectId();
+                addFolder({ userId, title: "default", key: tempKey });
+                getFolderList(user._id);
               }}
               type="button"
               className="inline-flex align-bottom items-center px-5 mb-4 w-1/2 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded--tl-md text-white bg-indigo-600 dark:bg-gray-500 dark:border-4 dark:border-gray-300 dark:text-gray-800"
@@ -53,6 +73,11 @@ const ManageFoobots = ({ userId, addFolder }) => {
               Add Folder
             </button>
             <button
+              onClick={(e) => {
+                e.preventDefault();
+                deleteFolder(folder._id);
+                getFolderList(user._id);
+              }}
               type="button"
               className="inline-flex align-bottom items-center px-4 mb-4 w-1/2 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-tr-md text-white bg-indigo-600 dark:bg-gray-500 dark:border-4 dark:border-gray-300 dark:text-gray-800"
             >
@@ -63,8 +88,7 @@ const ManageFoobots = ({ userId, addFolder }) => {
               />
               Delete Folder
             </button>
-            {/*TODO: Add settings for overscroll for the tree component*/}
-            <ControlledTreeView />
+            <FolderTree folderList={folderList} />
           </div>
         </div>
       </aside>
@@ -73,13 +97,16 @@ const ManageFoobots = ({ userId, addFolder }) => {
 };
 
 const mapStateToProps = (state) => ({
-  userId: state.user._id,
+  user: state.user,
   folder: state.folder,
+  folderList: state.folderList,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   addFolder: (folder) => dispatch(addFolderRequest(folder)),
   deleteFolder: (folder) => dispatch(deleteFolderRequest(folder)),
+  updateFolder: (folder) => dispatch(updateFolderRequest(folder)),
+  getFolderList: (userId) => dispatch(getFolderListRequest(userId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManageFoobots);
