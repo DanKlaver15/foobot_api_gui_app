@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Joi = require("joi");
 const userController = require("../controllers/userController");
+const folderListController = require("../controllers/folderListController");
 const auth = require("../middlewares/auth");
 const { validateUser } = require("../middlewares/validate");
 const avatar = require("../middlewares/avatar");
@@ -22,5 +23,7 @@ router
   .route("/:id/avatar")
   .post([auth, avatar.upload, avatar.handleAvatar()], userController.addAvatar)
   .delete(auth, userController.removeAvatar);
+
+router.route("/:id/folderList").get(auth, folderListController.getFolderList);
 
 module.exports = router;
