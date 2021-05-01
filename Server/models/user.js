@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 const bcrypt = require("bcrypt");
+const { deviceSchema } = require("./device");
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -12,6 +13,7 @@ const userSchema = new mongoose.Schema({
   },
   password: { type: String, required: true, minlength: 3, trim: true },
   apiKey: { type: String, minlength: 301, trim: true },
+  foobotUsername: { type: String, trim: true },
   email: {
     type: String,
     required: true,
@@ -25,6 +27,7 @@ const userSchema = new mongoose.Schema({
   avatar: { type: String },
   darkMode: { type: Boolean, default: false },
   registered: { type: Date, default: Date.now },
+  devices: [{ type: deviceSchema }],
 });
 
 userSchema.pre("save", async function preSave(next) {
