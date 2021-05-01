@@ -3,13 +3,19 @@ import { connect } from "react-redux";
 import {
   deleteFolderRequest,
   updateFolderRequest,
-} from "../state/Folder/thunks";
+} from "../../state/Folder/thunks";
 import { Tree } from "antd";
 import "antd/dist/antd.css";
+import "./folderTree.css";
 
-const FolderTree = ({ folderList, updateFolder, deleteFolder }) => {
-  const [showLine, setShowLine] = useState(true);
-  const [showIcon, setShowIcon] = useState(false);
+const FolderTree = ({ folderList, updateFolder, user }) => {
+  const treeColor = () => {
+    if (user.darkMode) {
+      return "darkModeTree";
+    } else {
+      return "lightModeTree";
+    }
+  };
 
   const reformatData = () => {
     console.log("REFORMATING THE DATA FOR THE TREE");
@@ -124,19 +130,13 @@ const FolderTree = ({ folderList, updateFolder, deleteFolder }) => {
     }
   };
 
-  let bgColor = {
-    color: "#1F2937",
-  };
-
   return folderList.length > 0 ? (
-    <div className="bg-gray-600">
+    <div id={treeColor()}>
       <Tree
-        className="draggable-tree"
+        className="hide-file-icon"
         draggable
         blockNode
-        style={{ bgColor }}
-        showLine={true}
-        showIcon={showIcon}
+        showLine
         onDragEnter={onDragEnter}
         onDrop={onDrop}
         onSelect={onSelect}
@@ -150,6 +150,7 @@ const FolderTree = ({ folderList, updateFolder, deleteFolder }) => {
 
 const mapStateToProps = (state) => ({
   folder: state.folder,
+  user: state.user,
   folderList: state.folderList,
 });
 

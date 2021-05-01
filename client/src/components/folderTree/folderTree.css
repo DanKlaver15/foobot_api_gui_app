@@ -1,34 +1,67 @@
-.ant-tree {
+div#darkModeTree .ant-tree {
   background-color: transparent;
   color: #d1d5db;
 }
 
-.ant-tree-show-line {
+div#lightModeTree .ant-tree {
+  background-color: transparent;
+  color: #000000;
+}
+
+div#darkModeTree .ant-tree-show-line {
   background-color: transparent;
   color: #d1d5db;
 }
 
-.ant-tree-switcher.ant-tree-switcher_close {
+div#lightModeTree .ant-tree-show-line {
+  background-color: transparent;
+  color: #000000;
+}
+
+div#darkModeTree .ant-tree-switcher.ant-tree-switcher_close {
   background-color: transparent;
   color: #d1d5db;
 }
 
-.ant-tree-switcher.ant-tree-switcher_open {
+div#lightModeTree .ant-tree-switcher.ant-tree-switcher_close {
+  background-color: transparent;
+  color: #000000;
+}
+
+div#darkModeTree .ant-tree-switcher.ant-tree-switcher_open {
   background-color: transparent;
   color: #d1d5db;
 }
 
-.ant-tree-switcher.ant-tree-switcher-noop {
+div#lightModeTree .ant-tree-switcher.ant-tree-switcher_open {
+  background-color: transparent;
+  color: #000000;
+}
+
+div#darkModeTree .ant-tree-switcher.ant-tree-switcher-noop {
   background-color: transparent;
   color: #d1d5db;
 }
 
-.ant-tree .ant-tree-node-content-wrapper.ant-tree-node-selected {
+div#lightModeTree .ant-tree-switcher.ant-tree-switcher-noop {
+  background-color: transparent;
+  color: #000000;
+}
+
+div#darkModeTree .ant-tree .ant-tree-node-content-wrapper.ant-tree-node-selected {
   background-color: #6b7280;
 }
 
-.ant-tree .ant-tree-node-content-wrapper:hover {
+div#lightModeTree .ant-tree .ant-tree-node-content-wrapper.ant-tree-node-selected {
+  background-color: #D1D5DB;
+}
+
+div#darkModeTree .ant-tree .ant-tree-node-content-wrapper:hover {
   background-color: #6b7280;
+}
+
+div#lightModeTree .ant-tree .ant-tree-node-content-wrapper:hover {
+  background-color: #D1D5DB;
 }
 
 ::selection {
