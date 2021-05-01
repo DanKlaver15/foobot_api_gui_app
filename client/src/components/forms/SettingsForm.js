@@ -28,6 +28,7 @@ const SettingsForm = ({
   const [lastName, setLastName] = useState(user.lastName);
   const [email, setEmail] = useState(user.email);
   const [apiKey, setApiKey] = useState(user.apiKey);
+  const [foobotUsername, setFoobotUsername] = useState(user.foobotUsername);
 
   const toggleDarkMode = () => {
     setMode(!darkMode);
@@ -48,6 +49,8 @@ const SettingsForm = ({
           firstName,
           lastName,
           email,
+          apiKey,
+          foobotUsername,
         });
       }}
       className="space-y-8 divide-y divide-gray-200 overscroll-auto dark:divide-gray-600 dark:bg-gray-800"
@@ -248,11 +251,11 @@ const SettingsForm = ({
         <div className="pt-8">
           <div>
             <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-400">
-              API Key
+              Foobot API Access
             </h3>
             <p className="mt-1 text-sm text-gray-500">
-              Please enter your Foobot API key here. If you do not yet have one,
-              please log in to{" "}
+              Please enter your Foobot API key and Foobot Username here. If you
+              do not yet have one, please log in to{" "}
               <a
                 className="font-bold"
                 href={"https://api.foobot.io/apidoc/index.html"}
@@ -264,7 +267,24 @@ const SettingsForm = ({
           </div>
           <div className="grid grid-cols-5 gap-y-6 gap-x-7 xs:grid-cols-6">
             <div className="col-span-2 h-full xs:col-span-2 row-start-2">
-              {/*TODO: has API key in databse for security*/}
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-400"
+              >
+                Foobot Username
+              </label>
+              <div className="mt-1 w-2/3 flex h-8">
+                <input
+                  onChange={(e) => setFoobotUsername(e.target.value)}
+                  value={foobotUsername}
+                  id="foobotUsername"
+                  name="foobotUsername"
+                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:focus:ring-gray-300 dark:focus:border-gray-300 block w-full sm:text-sm border-gray-300 rounded-md dark:bg-gray-500 dark:text-gray-300 pl-1"
+                />
+              </div>
+            </div>
+            <div className="col-span-3 h-full xs:col-span-2 row-start-3">
+              {/*TODO: hash API key in databse for security*/}
               <label
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-700 dark:text-gray-400"
@@ -272,6 +292,7 @@ const SettingsForm = ({
                 API Key
               </label>
               <div className="mt-1 w-2/3 flex h-8">
+                {/*TODO: hash API key in database*/}
                 <input
                   onChange={(e) => setApiKey(e.target.value)}
                   value={apiKey}
