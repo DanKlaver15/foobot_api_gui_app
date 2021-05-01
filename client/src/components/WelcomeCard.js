@@ -3,8 +3,13 @@ import { connect } from "react-redux";
 import Avatar from "./Avatar";
 
 const WelcomeCard = ({ user }) => {
+  let numDevices = 0;
+  if (user.devices) {
+    numDevices = user.devices.length;
+  }
+
   return (
-    <div className="rounded-lg bg-white overflow-hidden shadow w-1/3">
+    <div className="rounded-lg bg-white overflow-hidden w-full mb-4">
       <h2 className="sr-only" id="profile-overview-title">
         Profile Overview
       </h2>
@@ -24,17 +29,13 @@ const WelcomeCard = ({ user }) => {
           </div>
         </div>
       </div>
-      <div className="border-t border-gray-200 bg-gray-50 grid grid-cols-1 divide-y divide-gray-200 sm:grid-cols-3 sm:divide-y-0 sm:divide-x">
+      <div className="border-t border-gray-200 bg-gray-50">
         {/*TODO: Add stats here (optional)*/}
-        {/*{stats.map((stat) => (
-          <div
-            key={stat.label}
-            className="px-6 py-5 text-sm font-medium text-center"
-          >
-            <span className="text-gray-900">{stat.value}</span>{" "}
-            <span className="text-gray-600">{stat.label}</span>
-          </div>
-        ))}*/}
+        <div key="stats" className="px-6 py-5 text-lg font-medium">
+          <span className="text-gray-900">You currently have</span>{" "}
+          <span className="text-blue-600">{numDevices}</span>{" "}
+          <span className="text-gray-900">Foobot machines</span>
+        </div>
       </div>
     </div>
   );
