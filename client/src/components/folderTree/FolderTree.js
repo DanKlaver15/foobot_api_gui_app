@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import {
-  updateFolderRequest,
   deleteFolderRequest,
+  updateFolderRequest,
 } from "../state/Folder/thunks";
 import { Tree } from "antd";
 import "antd/dist/antd.css";
@@ -11,12 +11,45 @@ const FolderTree = ({ folderList, updateFolder, deleteFolder }) => {
   const [showLine, setShowLine] = useState(true);
   const [showIcon, setShowIcon] = useState(false);
 
-  let data = folderList;
+  const reformatData = () => {
+    console.log("REFORMATING THE DATA FOR THE TREE");
+    let rawData = folderList.map((folder) => {
+      let obj = {
+        ...folder,
+        key: folder._id,
+      };
+      delete obj._id;
+      return obj;
+    });
+
+    const idMapping = rawData.reduce((acc, el, i) => {
+      acc[el.key] = i;
+      return acc;
+    }, {});
+
+    let data = [];
+    rawData.forEach((el) => {
+      // Handle the root element
+      if (el.parentId === null) {
+        data.push(el);
+        return;
+      }
+      // Use our mapping to locate the parent element in our data array
+      const parentEl = rawData[idMapping[el.parentId]];
+      // Add our current el to its parent's `children` array
+      parentEl.children = [...(parentEl.children || []), el];
+    });
+    return data;
+  };
+
+  let data = reformatData();
+
+  console.log("DATA: ", data);
 
   const onSelect = (keys, info) => {
     console.log("Trigger Select", keys, info);
     let folder = {
-      _id: info.node._id,
+      _id: info.node.key,
     };
     updateFolder({ ...folder });
   };
@@ -26,7 +59,6 @@ const FolderTree = ({ folderList, updateFolder, deleteFolder }) => {
   };
 
   const onDrop = (info) => {
-    console.log(info);
     const dropKey = info.node.key;
     const dragKey = info.dragNode.key;
     const dropPos = info.node.pos.split("-");
@@ -55,24 +87,17 @@ const FolderTree = ({ folderList, updateFolder, deleteFolder }) => {
         item.children = item.children || [];
         item.children.unshift(dragObj);
       });
-      console.log(info.node);
+      console.log("New parent folder: ", info.node);
+      console.log("Folder that was dragged: ", info.dragNode);
       let folder = {
-        _id: info.node._id,
-        title: info.node.title,
-        key: info.node.key,
-        userId: info.node.userId,
-        selected: info.node.selected,
-        children: {
-          _id: info.dragNode._id,
-          title: info.dragNode.title,
-          key: info.dragNode.key,
-          userId: info.dragNode.userId,
-          selected: info.dragNode.selected,
-          children: [],
-        },
+        title: info.dragNode.title,
+        _id: info.dragNode.key,
+        parentId: info.node.key,
+        userId: info.dragNode.userId,
+        selected: info.dragNode.selected,
       };
       updateFolder({ ...folder });
-      deleteFolder(info.dragNode._id);
+      data = reformatData();
     } else if (
       (info.node.props.children || []).length > 0 &&
       info.node.props.expanded &&
@@ -81,6 +106,7 @@ const FolderTree = ({ folderList, updateFolder, deleteFolder }) => {
       loop(data, dropKey, (item) => {
         item.children = item.children || [];
         item.children.unshift(dragObj);
+        data = reformatData();
       });
     } else {
       let ar;
@@ -94,16 +120,22 @@ const FolderTree = ({ folderList, updateFolder, deleteFolder }) => {
       } else {
         ar.splice(i + 1, 0, dragObj);
       }
+      data = reformatData();
     }
   };
 
+  let bgColor = {
+    color: "#1F2937",
+  };
+
   return folderList.length > 0 ? (
-    <div>
+    <div className="bg-gray-600">
       <Tree
         className="draggable-tree"
         draggable
         blockNode
-        showLine={showLine}
+        style={{ bgColor }}
+        showLine={true}
         showIcon={showIcon}
         onDragEnter={onDragEnter}
         onDrop={onDrop}
