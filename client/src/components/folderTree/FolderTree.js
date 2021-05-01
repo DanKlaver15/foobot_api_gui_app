@@ -10,10 +10,10 @@ import "./folderTree.css";
 
 const FolderTree = ({ folderList, updateFolder, user }) => {
   const treeColor = () => {
-    if (user.darkMode) {
-      return "darkModeTree";
-    } else {
+    if (!user.darkMode) {
       return "lightModeTree";
+    } else {
+      return "darkModeTree";
     }
   };
 
