@@ -1,12 +1,10 @@
 import axios from "axios";
 import { authHeader, userId, getError } from "../../helpers/authHeader";
-
 import {
   loginInProgress,
   loginFailure,
   loginSuccess,
   updateUser,
-  deleteUser,
   logout,
   removeLoginError,
   registerSucceess,
@@ -24,8 +22,22 @@ export const loginRequest = (user) => async (dispatch, getState) => {
 
   try {
     const response = await axios.post(`http://localhost:5000/auth/login`, user);
-
     const data = await response.data;
+
+    try {
+      const foobots = await axios.get(
+        `https://api.foobot.io/v2/owner/${data.user.foobotUsername}/devices`,
+        {
+          headers: {
+            "x-api-key-token": data.user.apiKey,
+          },
+        }
+      );
+
+      data.user.devices = await foobots.data;
+    } catch (err) {
+      console.log(err);
+    }
 
     dispatch(removeLoginError());
     dispatch(loginSuccess());
