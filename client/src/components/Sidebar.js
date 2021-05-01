@@ -250,7 +250,7 @@ const Sidebar = ({ isOpen, close, user }) => {
                 <div className="mr-3 text-xl">
                   <FontAwesomeIcon icon={faHdd} fixedWidth />
                 </div>
-                <Link to="/foobots">Foobots</Link>
+                <Link to="/foobots">Data Download</Link>
               </button>
 
               <button
