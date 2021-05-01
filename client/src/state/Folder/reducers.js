@@ -35,11 +35,12 @@ export const folder = (state = [], action) => {
     }
     case ADD_FOLDER: {
       const { folder } = payload;
-      return [...state, folder];
+      return state;
     }
     case DELETE_FOLDER: {
       const { folderId } = payload;
-      return state.filter((folder) => folder._id === folderId);
+      console.log("removing...", folderId);
+      return [];
     }
     default:
       return state;
