@@ -3,11 +3,10 @@ const mongoose = require("mongoose");
 const folderSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true,
+    default: "default",
   },
-  key: { type: mongoose.Schema.Types.ObjectId },
+  parentId: { type: mongoose.Schema.Types.ObjectId, default: null },
   userId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
-  children: [{ type: Object }],
 });
 
 const Folder = mongoose.model("Folder", folderSchema);
