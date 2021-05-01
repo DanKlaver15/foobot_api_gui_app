@@ -16,7 +16,7 @@ const getFolderList = async (req, res) => {
       .exec();
 
     if (!folderList)
-      return res.status(401).send({ error: "Error: User feed not found" });
+      return res.status(401).send({ error: "Error: Folder list not found" });
 
     return res.status(201).send(folderList);
   } catch (err) {
