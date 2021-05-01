@@ -37,7 +37,7 @@ const RenameModal = ({ folder, updateFolder }) => {
           }
         }}
         type="button"
-        className="relative w-full flex align-bottom items-center px-5 mb-4 w-1/2 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded--tl-md text-white bg-indigo-600 dark:bg-gray-600 dark:border-4 dark:border-gray-300 dark:text-gray-300"
+        className="relative w-full flex align-bottom items-center px-5 mb-4 w-1/2 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded--tl-md text-white bg-indigo-600 border-indigo-300 dark:bg-gray-600 dark:border-4 dark:border-gray-300 dark:text-gray-300"
       >
         <FontAwesomeIcon
           icon={faEdit}
@@ -88,7 +88,7 @@ const RenameModal = ({ folder, updateFolder }) => {
             >
               <div
                 role="none"
-                className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6"
+                className="inline-block align-bottom bg-white dark:bg-gray-500 dark:text-gray-300 rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6"
               >
                 <form
                   id="modalForm"
