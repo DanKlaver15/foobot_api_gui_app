@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
-import FolderTree from "../FolderTree";
+import FolderTree from "../folderTree/FolderTree";
 import DataDownload from "../DataDownload";
+import RenameModal from "../folderTree/RenameModal";
 import { connect } from "react-redux";
 import {
   addFolderRequest,
@@ -9,17 +10,14 @@ import {
 } from "../../state/Folder/thunks";
 import { getFolderListRequest } from "../../state/FolderList/thunks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFolderPlus } from "@fortawesome/pro-light-svg-icons";
-import { faFolderMinus } from "@fortawesome/pro-light-svg-icons";
-
-const mongoose = require("mongoose");
+import { faFolderPlus } from "@fortawesome/pro-regular-svg-icons";
+import { faFolderTimes } from "@fortawesome/pro-regular-svg-icons";
 
 const ManageFoobots = ({
   user,
   folder,
   addFolder,
   deleteFolder,
-  updateFolder,
   folderList,
   getFolderList,
 }) => {
@@ -55,39 +53,47 @@ const ManageFoobots = ({
       <aside className="hidden relative xl:order-first xl:flex xl:flex-col flex-shrink-0 w-96 border-r border-gray-200 overscroll-y-auto">
         <div className="absolute inset-0 py-6 px-4 sm:px-6 lg:px-8">
           <div className="h-full border-2 border-gray-200 rounded-lg dark:text-gray-400">
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                let tempKey = mongoose.Types.ObjectId();
-                addFolder({ userId, title: "default", key: tempKey });
-                getFolderList(user._id);
-              }}
-              type="button"
-              className="inline-flex align-bottom items-center px-5 mb-4 w-1/2 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded--tl-md text-white bg-indigo-600 dark:bg-gray-500 dark:border-4 dark:border-gray-300 dark:text-gray-800"
-            >
-              <FontAwesomeIcon
-                icon={faFolderPlus}
-                className="-ml-1 mr-3 h-6 w-6"
-                fixedWidth
-              />
-              Add Folder
-            </button>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                deleteFolder(folder._id);
-                getFolderList(user._id);
-              }}
-              type="button"
-              className="inline-flex align-bottom items-center px-4 mb-4 w-1/2 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-tr-md text-white bg-indigo-600 dark:bg-gray-500 dark:border-4 dark:border-gray-300 dark:text-gray-800"
-            >
-              <FontAwesomeIcon
-                icon={faFolderMinus}
-                className="-ml-1 mr-3 h-6 w-6"
-                fixedWidth
-              />
-              Delete Folder
-            </button>
+            <span className="relative flex">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  addFolder({
+                    userId,
+                  });
+                  getFolderList(userId);
+                }}
+                type="button"
+                className="relative flex align-bottom items-center px-5 mb-4 w-1/2 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded--tl-md text-white bg-indigo-600 dark:bg-gray-600 dark:border-4 dark:border-gray-300 dark:text-gray-300"
+              >
+                <FontAwesomeIcon
+                  icon={faFolderPlus}
+                  className="mr-2 h-6 w-6"
+                  fixedWidth
+                />
+                Add
+              </button>
+
+              <RenameModal />
+
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (folder._id) {
+                    deleteFolder(folder._id);
+                    getFolderList(userId);
+                  }
+                }}
+                type="button"
+                className="relative flex align-bottom items-center px-4 mb-4 w-1/2 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-tr-md text-white bg-indigo-600 dark:bg-gray-600 dark:border-4 dark:border-gray-300 dark:text-gray-300"
+              >
+                <FontAwesomeIcon
+                  icon={faFolderTimes}
+                  className="-ml-1 mr-2 h-6 w-6"
+                  fixedWidth
+                />
+                Delete
+              </button>
+            </span>
             <FolderTree folderList={folderList} />
           </div>
         </div>
