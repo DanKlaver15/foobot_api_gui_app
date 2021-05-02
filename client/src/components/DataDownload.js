@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import DataFormatSetting from "./RadioGroup";
 import { connect } from "react-redux";
-import DateFnsUtils from "@date-io/date-fns"; // choose your lib
+import DateFnsUtils from "@date-io/date-fns";
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
@@ -10,6 +9,10 @@ import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import lightBlue from "@material-ui/core/colors/lightBlue";
 import grey from "@material-ui/core/colors/grey";
+import { updateDataRequest } from "../state/Data/thunks";
+import moment from "moment";
+import { RadioGroup } from "@headlessui/react";
+import Table from "./Table";
 
 const materialTheme = createMuiTheme({
   overrides: {
@@ -45,13 +48,52 @@ const materialTheme = createMuiTheme({
   },
 });
 
-const DataDownload = () => {
+const settings = [
+  {
+    name: "Text/CSV",
+  },
+  {
+    name: "Application/JSON",
+  },
+];
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
+
+const DataDownload = ({ device, getData, user, data }) => {
   let today = new Date();
   let yesterday = today.setDate(today.getDate() - 1);
 
   const [startDate, setStartDate] = useState(yesterday);
   const [endDate, setEndDate] = useState(new Date());
-  const [sensorList, setSensorList] = useState("pm,voc,hum,co2,tmp,allpollu");
+  const [averageBy, setAverageBy] = useState("0");
+  // const [sensorList, setSensorList] = useState("pm,voc,hum,co2,tmp,allpollu");
+  const [selected, setSelected] = useState(settings[0]);
+
+  const download = () => {
+    if (selected.name === "Text/CSV") {
+      let link = document.createElement("a");
+      link.href = window.URL.createObjectURL(new Blob([data], { type: "txt" }));
+      link.download = "foobot_data.txt";
+      document.body.appendChild(link);
+      link.click();
+      setTimeout(function () {
+        window.URL.revokeObjectURL(link);
+      }, 200);
+    } else {
+      let link = document.createElement("a");
+      link.href = window.URL.createObjectURL(
+        new Blob([data], { type: "json" })
+      );
+      link.download = "foobot_data.json";
+      document.body.appendChild(link);
+      link.click();
+      setTimeout(function () {
+        window.URL.revokeObjectURL(link);
+      }, 200);
+    }
+  };
 
   return (
     <div>
@@ -63,14 +105,34 @@ const DataDownload = () => {
             </h3>
             <div className="mt-1 text-sm dark:text-gray-400">
               <p>
-                If<span className="font-bold mx-1">NO</span>foobot is selected
-                above then data will be gathered from
-                <span className="font-bold mx-1">ALL</span>Foobots.
+                If you have any questions about what to enter in these fields,
+                please review the &nbsp;
+                <a
+                  target="blank"
+                  href="https://api.foobot.io/apidoc/index.html"
+                >
+                  Foobot API documentation
+                </a>
+                .
               </p>
             </div>
           </div>
           <div className="mt-5 md:mt-0 md:col-span-2">
-            <form action="#" method="POST">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                getData(
+                  user.apiKey,
+                  device.uuid,
+                  moment(startDate).unix(),
+                  moment(endDate).unix(),
+                  averageBy,
+                  selected.name.toLowerCase()
+                );
+              }}
+              action="#"
+              method="POST"
+            >
               <div className="grid grid-cols-7 gap-8">
                 <div className="col-span-4">
                   <label
@@ -80,8 +142,10 @@ const DataDownload = () => {
                     UUID
                   </label>
                   <input
+                    value={device.uuid}
+                    onChange={(e) => e.preventDefault()}
                     type="text"
-                    disabled="true"
+                    disabled={true}
                     name="uuid"
                     id="uuid"
                     className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:bg-gray-400"
@@ -98,7 +162,7 @@ const DataDownload = () => {
                   <ThemeProvider theme={materialTheme}>
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                       <KeyboardDatePicker
-                        clearable
+                        clearable="true"
                         variant="inline"
                         value={startDate}
                         onChange={(date) => setStartDate(date)}
@@ -121,7 +185,7 @@ const DataDownload = () => {
                   <ThemeProvider theme={materialTheme}>
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                       <KeyboardDatePicker
-                        clearable
+                        clearable="true"
                         disableFuture="true"
                         variant="inline"
                         value={endDate}
@@ -140,9 +204,11 @@ const DataDownload = () => {
                     htmlFor="average_by"
                     className="block text-sm font-medium text-gray-700 dark:text-gray-400"
                   >
-                    Average By
+                    Average By (in seconds)
                   </label>
                   <input
+                    onChange={(e) => setAverageBy(e.target.value)}
+                    value={averageBy}
                     type="text"
                     name="average_by"
                     id="average_by"
@@ -150,47 +216,141 @@ const DataDownload = () => {
                   />
                 </div>
 
-                <div className="col-span-4 row-start-4">
-                  <label
-                    htmlFor="street_address"
-                    className="block text-sm font-medium text-gray-700 dark:text-gray-400"
-                  >
-                    Sensor List
-                  </label>
-                  <input
-                    value={sensorList}
-                    type="text"
-                    name="sensor_list"
-                    id="sensor_list"
-                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:bg-gray-400"
-                  />
-                </div>
+                {/*<div className="col-span-4 row-start-4">*/}
+                {/*  <label*/}
+                {/*    htmlFor="street_address"*/}
+                {/*    className="block text-sm font-medium text-gray-700 dark:text-gray-400"*/}
+                {/*  >*/}
+                {/*    Sensor List*/}
+                {/*  </label>*/}
+                {/*  <input*/}
+                {/*    value={sensorList}*/}
+                {/*    onChange={(e) => setSensorList(e.target.value)}*/}
+                {/*    type="text"*/}
+                {/*    name="sensor_list"*/}
+                {/*    id="sensor_list"*/}
+                {/*    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md dark:bg-gray-400"*/}
+                {/*  />*/}
+                {/*</div>*/}
 
                 <div className="col-span-4 row-start-5 row-span-1">
-                  <DataFormatSetting />
+                  <RadioGroup value={selected} onChange={setSelected}>
+                    <RadioGroup.Label className="sr-only">
+                      Data type setting
+                    </RadioGroup.Label>
+                    <label
+                      htmlFor="data_type"
+                      id="data_type"
+                      className="block text-sm font-medium text-gray-700 dark:text-gray-400"
+                    >
+                      Return Data Type
+                    </label>
+                    <div className="bg-white dark:bg-gray-400 rounded-md grid grid-cols-2 h-full">
+                      {settings.map((setting, settingIdx) => (
+                        <RadioGroup.Option
+                          key={setting.name}
+                          value={setting}
+                          className={({ checked }) =>
+                            classNames(
+                              settingIdx === 0 ? "rounded-md" : "",
+                              settingIdx === settings.length - 1
+                                ? "rounded-md"
+                                : "",
+                              checked
+                                ? "bg-indigo-50 border-indigo-200 z-10"
+                                : "border-gray-200",
+                              "relative border p-4 flex cursor-pointer focus:outline-none"
+                            )
+                          }
+                        >
+                          {({ active, checked }) => (
+                            <>
+                              <span
+                                className={classNames(
+                                  checked
+                                    ? "bg-indigo-600 border-transparent"
+                                    : "bg-white dark:bg-gray-300 border-gray-300",
+                                  active ? "" : "",
+                                  "h-4 w-4 mt-0.5 cursor-pointer rounded-full border flex items-center justify-center"
+                                )}
+                                aria-hidden="true"
+                              >
+                                <span className="rounded-full bg-white dark:bg-gray-300 w-1.5 h-1.5" />
+                              </span>
+                              <div className="ml-3 flex flex-col">
+                                <RadioGroup.Label
+                                  as="span"
+                                  className={classNames(
+                                    checked
+                                      ? "text-indigo-900"
+                                      : "text-gray-900",
+                                    "block text-sm font-medium"
+                                  )}
+                                >
+                                  {setting.name}
+                                </RadioGroup.Label>
+                              </div>
+                            </>
+                          )}
+                        </RadioGroup.Option>
+                      ))}
+                    </div>
+                  </RadioGroup>
                 </div>
+              </div>
+              <div className="flex justify-end">
+                <button
+                  type="submit"
+                  className="ml-3 mt-10 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  Submit
+                </button>
               </div>
             </form>
           </div>
         </div>
+        <div>
+          <div className="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6 dark:bg-gray-600">
+            <div>
+              <div>
+                <h3 className="text-lg font-medium leading-6 text-gray-900 dark:text-gray-300">
+                  Data Preview
+                </h3>
+              </div>
+              <div className="mt-5 md:mt-0 md:col-span-2">
+                <form>
+                  <div>
+                    <Table type={selected.name} />
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-
       <div className="flex justify-end">
         <button
-          type="button"
-          className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          onClick={download}
+          className="ml-3 mb-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
-          Cancel
-        </button>
-        <button
-          type="submit"
-          className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-          Save
+          Download
         </button>
       </div>
     </div>
   );
 };
 
-export default DataDownload;
+const mapStateToProps = (state) => ({
+  device: state.device,
+  user: state.user,
+  data: state.data,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getData: (apiKey, uuid, start, end, averageBy, dataFormat) =>
+    dispatch(
+      updateDataRequest(apiKey, uuid, start, end, averageBy, dataFormat)
+    ),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DataDownload);
