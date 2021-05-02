@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { loginRequest } from "../../state/User/thunks";
 import Logo from "../../logo/Logo";
+import { loginRequest } from "../../state/User/thunks";
 
-function LoginForm({ loginRequest, loginError }) {
+function LoginForm({ loginRequest, loginError, user }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -126,6 +126,7 @@ function LoginForm({ loginRequest, loginError }) {
 
 const mapStateToProps = (state) => ({
   loginError: state.loginError,
+  user: state.user,
 });
 
 const mapDispatchToProps = (dispatch) => ({
