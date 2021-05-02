@@ -294,7 +294,7 @@ const SettingsForm = ({
               <div className="mt-1 w-2/3 flex h-8">
                 {/*TODO: hash API key in database*/}
                 <input
-                  onChange={(e) => setApiKey(e.target.value)}
+                  onChange={(e) => setApiKey(e.target.value.trim())}
                   value={apiKey}
                   id="apiKey"
                   name="apiKey"
