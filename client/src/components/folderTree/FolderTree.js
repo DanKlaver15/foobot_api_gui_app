@@ -1,14 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import {
   deleteFolderRequest,
   updateFolderRequest,
 } from "../../state/Folder/thunks";
+import { updateUserRequest } from "../../state/User/thunks";
 import { Tree } from "antd";
 import "antd/dist/antd.css";
 import "./folderTree.css";
+import { updateDeviceRequest } from "../../state/Device/thunks";
 
-const FolderTree = ({ folderList, updateFolder, user }) => {
+const FolderTree = ({
+  folderList,
+  updateFolder,
+  user,
+  updateUser,
+  updateDevice,
+}) => {
   const treeColor = () => {
     if (!user.darkMode) {
       return "lightModeTree";
@@ -18,8 +26,18 @@ const FolderTree = ({ folderList, updateFolder, user }) => {
   };
 
   const reformatData = () => {
-    console.log("REFORMATING THE DATA FOR THE TREE");
-    let rawData = folderList.map((folder) => {
+    let foobotData = user.devices.map((device) => {
+      let obj = {
+        ...device,
+        key: device._id,
+        title: device.name,
+      };
+      delete obj._id;
+      delete obj.name;
+      return obj;
+    });
+
+    let folderData = folderList.map((folder) => {
       let obj = {
         ...folder,
         key: folder._id,
@@ -27,6 +45,11 @@ const FolderTree = ({ folderList, updateFolder, user }) => {
       delete obj._id;
       return obj;
     });
+    console.log("folderList: ", folderList);
+    console.log("folderData: ", folderData);
+    let rawData = foobotData.concat(folderData);
+
+    rawData.forEach((item) => console.log(item));
 
     const idMapping = rawData.reduce((acc, el, i) => {
       acc[el.key] = i;
@@ -54,10 +77,18 @@ const FolderTree = ({ folderList, updateFolder, user }) => {
 
   const onSelect = (keys, info) => {
     console.log("Trigger Select", keys, info);
-    let folder = {
-      _id: info.node.key,
-    };
-    updateFolder({ ...folder });
+    if (info.node.uuid) {
+      let device = {
+        ...info.node,
+        _id: info.node.key,
+      };
+      updateDevice({ ...device });
+    } else {
+      let folder = {
+        _id: info.node.key,
+      };
+      updateFolder({ ...folder });
+    }
   };
 
   const onDragEnter = (info) => {
@@ -95,14 +126,29 @@ const FolderTree = ({ folderList, updateFolder, user }) => {
       });
       console.log("New parent folder: ", info.node);
       console.log("Folder that was dragged: ", info.dragNode);
-      let folder = {
-        title: info.dragNode.title,
-        _id: info.dragNode.key,
-        parentId: info.node.key,
-        userId: info.dragNode.userId,
-        selected: info.dragNode.selected,
-      };
-      updateFolder({ ...folder });
+      if (info.dragNode.uuid) {
+        let foobot = {
+          ...info.dragNode,
+          _id: info.dragNode.key,
+          name: info.dragNode.title,
+        };
+        delete foobot.key;
+        delete foobot.title;
+        const isDeviceIndex = (device) => (device = foobot);
+        let updatedFoobotIndex = user.devices.findIndex(isDeviceIndex);
+        let allFoobots = user.devices;
+        allFoobots[updatedFoobotIndex].parentId = info.node.key;
+        updateUser({ ...user, devices: allFoobots });
+      } else {
+        let folder = {
+          title: info.dragNode.title,
+          _id: info.dragNode.key,
+          parentId: info.node.key,
+          userId: info.dragNode.userId,
+          selected: info.dragNode.selected,
+        };
+        updateFolder({ ...folder });
+      }
       data = reformatData();
     } else if (
       (info.node.props.children || []).length > 0 &&
@@ -130,7 +176,7 @@ const FolderTree = ({ folderList, updateFolder, user }) => {
     }
   };
 
-  return folderList.length > 0 ? (
+  return (
     <div id={treeColor()}>
       <Tree
         className="hide-file-icon"
@@ -143,8 +189,6 @@ const FolderTree = ({ folderList, updateFolder, user }) => {
         treeData={data}
       />
     </div>
-  ) : (
-    <div>No folders</div>
   );
 };
 
@@ -152,11 +196,14 @@ const mapStateToProps = (state) => ({
   folder: state.folder,
   user: state.user,
   folderList: state.folderList,
+  devices: state.user.devices,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   updateFolder: (folder) => dispatch(updateFolderRequest(folder)),
   deleteFolder: (folder) => dispatch(deleteFolderRequest(folder)),
+  updateUser: (user) => dispatch(updateUserRequest(user)),
+  updateDevice: (device) => dispatch(updateDeviceRequest(device)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FolderTree);
