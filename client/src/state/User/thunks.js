@@ -20,31 +20,52 @@ import {
 export const loginRequest = (user) => async (dispatch, getState) => {
   dispatch(loginInProgress());
 
+  let loginData = {};
   try {
-    const response = await axios.post(`http://localhost:5000/auth/login`, user);
-    const data = await response.data;
-
-    try {
-      const foobots = await axios.get(
-        `https://api.foobot.io/v2/owner/${data.user.foobotUsername}/devices`,
-        {
-          headers: {
-            "x-api-key-token": data.user.apiKey,
-          },
-        }
-      );
-
-      data.user.devices = await foobots.data;
-    } catch (err) {
-      console.log(err);
-    }
+    const loginResponse = await axios.post(
+      `http://localhost:5000/auth/login`,
+      user
+    );
+    loginData = await loginResponse.data;
 
     dispatch(removeLoginError());
     dispatch(loginSuccess());
-    dispatch(updateUser(data.user));
-    saveUser({ _id: data.user._id, token: data.token });
+    saveUser({ _id: loginData.user._id, token: loginData.token });
+    dispatch(updateUser(loginData.user));
   } catch (err) {
     dispatch(loginFailure(getError(err)));
+  }
+
+  dispatch(updateUserInProgress());
+  console.log(loginData);
+  // Fix this section below to update foobots
+  try {
+    const foobotResponse = await axios.get(
+      `https://api.foobot.io/v2/owner/${loginData.user.foobotUsername}/devices`,
+      {
+        headers: {
+          "x-api-key-token": loginData.user.apiKey,
+        },
+      }
+    );
+
+    const foobots = await foobotResponse.data;
+
+    const updateUserResponse = await axios.put(
+      `http://localhost:5000/api/users/${loginData.user._id}`,
+      { devices: foobots },
+      {
+        headers: authHeader(),
+      }
+    );
+
+    const updatedUser = await updateUserResponse.data;
+
+    dispatch(updateUserSuccess());
+    dispatch(updateUser(updatedUser));
+  } catch (err) {
+    console.log(err);
+    dispatch(updateUserFailure(getError(err)));
   }
 };
 
@@ -135,8 +156,8 @@ export const updateUserRequest = (user) => async (dispatch, getState) => {
 
     const updatedUser = await response.data;
 
-    dispatch(updateUser(updatedUser));
     dispatch(updateUserSuccess());
+    dispatch(updateUser(updatedUser));
   } catch (err) {
     console.log(err);
     dispatch(updateUserFailure(getError(err)));
@@ -179,12 +200,9 @@ export const getPersonRequest = (personId, userId) => async (
 
 export const deleteUserRequest = (userId) => async (dispatch, getState) => {
   try {
-    const response = await axios.delete(
-      `http://localhost:5000/api/users/${userId}`,
-      { headers: authHeader() }
-    );
-
-    const deletedUser = await response.data;
+    await axios.delete(`http://localhost:5000/api/users/${userId}`, {
+      headers: authHeader(),
+    });
 
     dispatch(logout());
   } catch (err) {
