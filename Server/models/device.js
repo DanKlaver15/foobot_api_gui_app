@@ -13,7 +13,7 @@ const deviceSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  folderId: { type: mongoose.Schema.Types.ObjectId, ref: "Folder" },
+  parentId: { type: mongoose.Schema.Types.ObjectId, default: null },
 });
 
 const Device = mongoose.model("Device", deviceSchema);
