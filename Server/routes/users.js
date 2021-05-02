@@ -26,4 +26,6 @@ router
 
 router.route("/:id/folderList").get(auth, folderListController.getFolderList);
 
+router.route("/:id/devices/:id").put(auth, userController.updateOne);
+
 module.exports = router;
