@@ -16,10 +16,12 @@ import { faFolderTimes } from "@fortawesome/pro-regular-svg-icons";
 const ManageFoobots = ({
   user,
   folder,
+  device,
   addFolder,
   deleteFolder,
   folderList,
   getFolderList,
+  data,
 }) => {
   const userId = user._id;
 
@@ -31,20 +33,23 @@ const ManageFoobots = ({
 
   return (
     /*TODO: Remove dashed border around areas before end of project*/
-    <div className="flex-1 relative z-0 flex overflow-hidden">
+    <div className="flex-1 relative z-0 flex overflow-y-auto">
       <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none xl:order-last">
         <div className="absolute inset-0 py-6 px-4 sm:px-6 lg:px-8">
           <div className="h-full border-2 border-indigo-300 dark:border-gray-200 rounded-lg overflow-y-auto">
-            <div className="bg-white dark:bg-gray-600 dark:text-gray-300 overflow-hidden shadow rounded-lg">
-              <div className="px-4 py-5 sm:p-6 text-center">
-                No Foobot Selected
-                <p className="text-sm">
-                  Please select a Foobot from the list on the left if you want
-                  to obtain data from one Foobot.
-                </p>
+            {!device._id ? (
+              <div className="bg-white dark:bg-gray-600 dark:text-gray-300 overflow-hidden shadow rounded-lg mb-6">
+                <div className="px-4 py-5 sm:p-6 text-center">
+                  No Foobot Selected
+                  <p className="text-sm">
+                    Please select a Foobot from the list on the left if you want
+                    to obtain data from one Foobot.
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="bg-white dark:bg-gray-600 overflow-hidden shadow rounded-lg mt-6 pb-4 pr-4">
+            ) : null}
+
+            <div className="bg-white dark:bg-gray-600 h-full shadow rounded-lg pb-4 pr-4">
               <DataDownload />
             </div>
           </div>
@@ -106,6 +111,8 @@ const mapStateToProps = (state) => ({
   user: state.user,
   folder: state.folder,
   folderList: state.folderList,
+  device: state.device,
+  data: state.data,
 });
 
 const mapDispatchToProps = (dispatch) => ({
