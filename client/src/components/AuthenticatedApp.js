@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import { connect } from "react-redux";
+import { updateFoobotsRequest } from "../state/User/thunks";
 
-const AuthenticatedApp = ({ user, children }) => {
+const AuthenticatedApp = ({ user, children, updateUserFoobots }) => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const darkOrLight = () => {
     if (user.darkMode === true) {
@@ -11,6 +12,10 @@ const AuthenticatedApp = ({ user, children }) => {
       return "";
     }
   };
+
+  // useEffect(() => {
+  //   updateUserFoobots(user);
+  // }, [user, updateUserFoobots]);
 
   return (
     <div
@@ -39,5 +44,9 @@ const AuthenticatedApp = ({ user, children }) => {
 const mapStateToProps = (state) => ({
   user: state.user,
 });
+
+// const mapDispatchToProps = (dispatch) => ({
+//   updateUserFoobots: (user) => dispatch(updateFoobotsRequest(user)),
+// });
 
 export default connect(mapStateToProps)(AuthenticatedApp);
