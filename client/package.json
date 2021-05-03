@@ -33,6 +33,7 @@
     "antd": "^4.15.3",
     "axios": "^0.21.1",
     "date-fns": "^2.21.1",
+    "evergreen-ui": "^5.1.2",
     "moment": "^2.29.1",
     "mongoose": "^5.12.6",
     "popper": "^1.0.1",
