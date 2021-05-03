@@ -9,7 +9,10 @@ import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import lightBlue from "@material-ui/core/colors/lightBlue";
 import grey from "@material-ui/core/colors/grey";
-import { updateDataRequest } from "../state/Data/thunks";
+import {
+  updateDataRequest,
+  updateDataFromAllDevicesRequest,
+} from "../state/Data/thunks";
 import moment from "moment";
 import { RadioGroup } from "@headlessui/react";
 import Table from "./Table";
@@ -61,7 +64,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const DataDownload = ({ device, getData, user, data }) => {
+const DataDownload = ({ device, getData, user, data, getAllData }) => {
   let today = new Date();
   let yesterday = today.setDate(today.getDate() - 1);
 
@@ -116,19 +119,41 @@ const DataDownload = ({ device, getData, user, data }) => {
                 .
               </p>
             </div>
+            {!device._id ? (
+              <div className="mt-1 text-md text-gray-900 dark:text-gray-300">
+                <h4 className="text-gray-900 dark:text-gray-300">
+                  If NO foobot is selected, the app will attempt to download the
+                  data for your specified time frame for ALL devices. No data
+                  preview will be shown below after clicking "Submit". Please
+                  note this can take a long time as it attempts to gather a
+                  large amount of data. When the process is complete, you will
+                  be prompted so save the file.
+                </h4>
+              </div>
+            ) : null}
           </div>
           <div className="mt-5 md:mt-0 md:col-span-2">
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                getData(
-                  user.apiKey,
-                  device.uuid,
-                  moment(startDate).unix(),
-                  moment(endDate).unix(),
-                  averageBy,
-                  selected.name.toLowerCase()
-                );
+                if (device) {
+                  getData(
+                    user.apiKey,
+                    device.uuid,
+                    moment(startDate).unix(),
+                    moment(endDate).unix(),
+                    averageBy,
+                    selected.name.toLowerCase()
+                  );
+                } else {
+                  getAllData(
+                    ...user,
+                    moment(startDate).unix(),
+                    moment(endDate).unix(),
+                    averageBy,
+                    selected.name.toLowerCase()
+                  );
+                }
               }}
               action="#"
               method="POST"
@@ -350,6 +375,17 @@ const mapDispatchToProps = (dispatch) => ({
   getData: (apiKey, uuid, start, end, averageBy, dataFormat) =>
     dispatch(
       updateDataRequest(apiKey, uuid, start, end, averageBy, dataFormat)
+    ),
+  getAllData: (user, uuid, start, end, averageBy, dataFormat) =>
+    dispatch(
+      updateDataFromAllDevicesRequest(
+        user,
+        uuid,
+        start,
+        end,
+        averageBy,
+        dataFormat
+      )
     ),
 });
 
