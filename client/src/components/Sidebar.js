@@ -7,11 +7,7 @@ import { faHouseUser } from "@fortawesome/pro-light-svg-icons";
 import { faUserCog } from "@fortawesome/pro-light-svg-icons";
 import { faHdd } from "@fortawesome/pro-light-svg-icons";
 
-const Sidebar = ({ isOpen, close, user }) => {
-  const menuOverlay = isOpen ? "opacity-100" : "opacity-0";
-  const closeButton = isOpen ? "opacity-100" : "opacity-0";
-  const offCanvasMenu = isOpen ? "translate-x-0" : "-translate-x-full";
-
+const Sidebar = () => {
   const { pathname } = useLocation();
   let dashboardFormat = "";
   let settingsFormat = "";
