@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import FolderTree from "../folderTree/FolderTree";
 import DataDownload from "../DataDownload";
 import RenameModal from "../folderTree/RenameModal";
@@ -12,6 +12,7 @@ import { getFolderListRequest } from "../../state/FolderList/thunks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFolderPlus } from "@fortawesome/pro-regular-svg-icons";
 import { faFolderTimes } from "@fortawesome/pro-regular-svg-icons";
+import UpdateDevicesDialog from "../CornerDialogue";
 
 const ManageFoobots = ({
   user,
@@ -34,6 +35,7 @@ const ManageFoobots = ({
   return (
     /*TODO: Remove dashed border around areas before end of project*/
     <div className="flex-1 relative z-0 flex overflow-y-auto">
+      <UpdateDevicesDialog show={true} />
       <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none xl:order-last">
         <div className="absolute inset-0 py-6 px-4 sm:px-6 lg:px-8">
           <div className="h-full border-2 border-indigo-300 dark:border-gray-200 rounded-lg overflow-y-auto">
