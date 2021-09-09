@@ -21,7 +21,7 @@
     "@material-ui/pickers": "^3.3.10",
     "@material-ui/styles": "^4.11.3",
     "@popperjs/core": "^2.9.2",
-    "@sentry/react": "^6.3.3",
+    "@sentry/react": "^6.11.0",
     "@sentry/tracing": "^6.3.3",
     "@storybook/addons": "^6.2.9",
     "@storybook/theming": "^6.2.9",
